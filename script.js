@@ -6,7 +6,23 @@ const game = document.getElementById("canvas")
     canvas.width = 700
 
 const ctx = game.getContext("2d")
+// declare a variable for the net
+const netWidth = 4
+const netHeight = canvas.height
 
+const net = {
+    x: canvas.width / 2 - netWidth /2,
+    y: 0,
+    width: netWidth,
+    height: netHeight,
+    color: "#FFF"
+}
+console.log(net)
+// declare a function for the net
+function drawNet() {
+    ctx.fillStyle = net.color
+    ctx.fillRect(net.x, net.y, net.width, net.height)
+}
 // constructor function for paddle
 function Paddle(x, y, color, width, height) {
     this.x = x
@@ -78,7 +94,7 @@ function drawBall() {
     ctx.fillStyle = "white"
     ctx.fill()
 }
-// render ball in the middle of canvas
+// render ball in the middle of canvas and set speed
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
@@ -88,8 +104,11 @@ const ball = {
 }
 console.log("this is the ball", ball)
 // create a function that will animate the ball
-function animateBall() {
+function gameLoop() {
     ctx.clearRect(0,0, canvas.width, canvas.height)
+    
+    // leftPaddle.y += leftPaddle.dy
+    // rightPaddle.y += rightPaddle.dy
 
 drawBall()
     // change position
@@ -104,28 +123,43 @@ drawBall()
     if  (ball.y + ball.size > canvas.height || ball.y - ball.size < 0) {
         ball.dy *= -1
     }
-    requestAnimationFrame(animateBall)
+    requestAnimationFrame(gameLoop)
+    // render the paddles
+    leftPaddle.render()
+    rightPaddle.render()
+    drawNet()
+
 }
-animateBall()
+gameLoop()
 
-
-// declare a function that will check for collision between paddle and ball
+// //declare a function that will check for collision between paddle and ball
 // function detectHit(paddle, ball) {
 //     return  paddle.x < ball.x + ball.width &&
 //             paddle.x + paddle.width > ball.x &&
 //             paddle.y < ball.y + ball.height &&
 //             paddle.y + paddle.height > ball.y
 // }
-//console.log(detectHit)
-// set up gameLoop function
-const gameLoop = () => {
-    // clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    // render the paddles
-    leftPaddle.render ()
-    rightPaddle.render ()
+// console.log(detectHit)
+// if (detectHit(ball, leftPaddle)) {
+//     ball.dx *= -1
+//     ball.x = leftPaddle.x + leftPaddle.width
+// }
+// else if (detectHit(ball, rightPaddle)) {
+//     ball.dx *= -1
+//     ball.x = rightPaddle.x - ball.width
+// }
 
-}
+
+// set up gameLoop function
+
+// const gameLoop = () => {
+//     requestAnimationFrame(animateBall)
+//     // clear the canvas
+//     ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+//     // speed of paddles
+// }
+// gameLoop()
 
 // declare a function that will stop our animation loop
 // let stopGameLoop = () => {clearInterval(gameInterval)}
@@ -135,4 +169,4 @@ document.addEventListener("keydown", moveLeftPaddle)
 document.addEventListener("keydown", moveRightPaddle)
                                 
 // declare a timing function will determine how and when the game animates
-let gameInterval = setInterval(gameLoop, 100)
+// let gameInterval = setInterval(gameLoop, 1000)
