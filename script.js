@@ -14,6 +14,7 @@ function Paddle(x, y, color, width, height) {
     this.color = color
     this.height = 90
     this.width = 15
+    this.speed= 10
     this.render = function () {
         ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -69,30 +70,61 @@ console.log("this is the right paddle", rightPaddle)
             break
                 }
             }
-//constructor function for circle
-function Circle(x, y, r) {
-    this.x = x
-    this.y = y
-    this.r = r
-    this.draw = () => {
-        ctx.beginPath()
-        ctx.arc(canvas.width / 2, canvas.height / 2, r, 0, Math.PI*2, false)
-        ctx.fill()  
-    }
+            
+// create a function for the ball in the canvas
+function drawBall() {
+    ctx.beginPath()
+    ctx.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2)
+    ctx.fillStyle = "white"
+    ctx.fill()
 }
-//render ball in the middle of canvas
-let ball = new Circle (100, 100, 20)
+// render ball in the middle of canvas
+const ball = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    size: 20,
+    dx: 4,
+    dy: 3
+}
 console.log("this is the ball", ball)
+// create a function that will animate the ball
+function animateBall() {
+    ctx.clearRect(0,0, canvas.width, canvas.height)
+
+drawBall()
+    // change position
+    ball.x += ball.dx
+    ball.y += ball.dy
+    
+    // detect left and right boundaries
+    if  (ball.x + ball.size > canvas.width || ball.x - ball.size < 0) {
+        ball.dx *= -1
+    }
+    // detect top and bottom boundaries
+    if  (ball.y + ball.size > canvas.height || ball.y - ball.size < 0) {
+        ball.dy *= -1
+    }
+    requestAnimationFrame(animateBall)
+}
+animateBall()
 
 
+// declare a function that will check for collision between paddle and ball
+// function detectHit(paddle, ball) {
+//     return  paddle.x < ball.x + ball.width &&
+//             paddle.x + paddle.width > ball.x &&
+//             paddle.y < ball.y + ball.height &&
+//             paddle.y + paddle.height > ball.y
+// }
+//console.log(detectHit)
 // set up gameLoop function
 const gameLoop = () => {
     // clear the canvas
-    ctx.clearRect(0, 0, game.width, game.height)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     // render the paddles
     leftPaddle.render ()
     rightPaddle.render ()
-    ball.draw ()
+
 }
 
 // declare a function that will stop our animation loop
