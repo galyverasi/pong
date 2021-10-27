@@ -38,8 +38,7 @@ function Paddle(x, y, color, width, height) {
     this.y = y
     this.color = color
     this.height = 90
-    this.width = 15
-    this.speed= 20
+    this.width = 5
     this.render = function () {
         ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -50,7 +49,7 @@ function Paddle(x, y, color, width, height) {
 let leftPaddle = new Paddle(5, canvas.height / 2 - 45, "white", 15, 90)
 console.log("this is the left paddle", leftPaddle)
 // render right padde in the canvas
-let rightPaddle = new Paddle(680, canvas.height / 2 - 45, "white", 15, 90)
+let rightPaddle = new Paddle(690, canvas.height / 2 - 45, "white", 15, 90)
 console.log("this is the right paddle", rightPaddle)
 
 // set up keycode functionality for left paddle
@@ -109,8 +108,8 @@ const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
     size: 20,
-    dx: 4,
-    dy: 3,
+    dx: 5,
+    dy: 4,
 }
 // console.log("this is the ball", ball)
 // function drawBall(x, y, size) {
@@ -126,8 +125,11 @@ function leftPaddleHit () {
     if (ball.x - ball.size < leftPaddle.x &&
          ball.y + ball.size > leftPaddle.y &&
          leftPaddle.x - leftPaddle.width < ball.x && 
-         leftPaddle.y + leftPaddle.height > ball.y) {
-        console.log("touch left")
+         leftPaddle.y + leftPaddle.height > ball.y
+         // console.log("hit left paddle")
+    ) { ball.dy *= -1
+        ball.dy *= -1
+        ball.y = leftPaddle.y - ball.size
     }
 }
 
@@ -136,9 +138,12 @@ function rightPaddleHit () {
     if (ball.x + ball.size > rightPaddle.x &&
          ball.y + ball.size > rightPaddle.y &&
          rightPaddle.x + rightPaddle.width > ball.x && 
-         rightPaddle.y + rightPaddle.height > ball.y) {
-        console.log("touch right")
-    }
+         rightPaddle.y + rightPaddle.height > ball.y
+         // console.log("hit right paddle")
+    ) { ball.dx *= -1
+        ball.dy *= -1
+        ball.x = rightPaddle.x - ball.size
+    } 
 }
 
 // create a function that will animate the ball
@@ -151,29 +156,39 @@ function gameLoop() {
     drawNet()
     drawBall()
     // change position
-    ball.x += ball.dx
-    ball.y += ball.dy
+    ball.x -= ball.dx
+    ball.y -= ball.dy
     
     rightPaddleHit()
-    leftPaddleHit()
+    // leftPaddleHit()
 
     // set left and right boundaries
     if  (ball.x + ball.size > canvas.width || ball.x - ball.size < 0) {
+        // direction of ball
         ball.dx *= -1
     } function detectWall() {
         if  (ball.x + ball.size > canvas.width) {
-            console.log("hit right side")
+            console.log("hit right wall")
             leftScore++
+        } else if 
+            (rightPaddleHit()) {
         } else if (ball.x - ball.size < 0) {
-            console.log("hit left side")
-            rightScore++
+             console.log("hit left wall")
+             rightScore++
+            (leftPaddleHit())
         }
     }
-
+    
     // set top and bottom boundaries
     if  (ball.y + ball.size > canvas.height || ball.y - ball.size < 0) {
+        // direction of ball
         ball.dy *= -1
     }
+    // function changeDirection() {
+    //     if (leftPaddleHit || rightPaddleHit) 
+    //     ball.dy *= +1
+    // }
+    // changeDirection()
 
     requestAnimationFrame(gameLoop)
     // render the paddles
