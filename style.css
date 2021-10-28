@@ -1,27 +1,35 @@
 html,body {
     margin: 0;
     padding: 0;
-  }
+}
 
 body {
-    background-color: gray;
+    background-color: rgb(73, 73, 73);
 }
 
 h1 {
     color: white;
     text-align: center;
-    font-family: "Lemon";
+    font-family: "Lexend Exa";
     font-size: xx-large;
     
 }
 
 canvas {
-background-color: rgb(4, 126, 39);
-padding-left: 0;
-padding-right: 0;
-margin-left: auto;
-margin-right: auto;
-display: block;
+    background-color: rgb(4, 126, 39);
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#btn {
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    font-family: "Lexend Exa";
 }
 
 #container {
