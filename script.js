@@ -2,6 +2,21 @@
 const game = document.getElementById("canvas")
 const ctx = game.getContext("2d")
 
+// static game
+ctx.beginPath()
+ctx.setLineDash([5, 10])
+ctx.moveTo(300, 0)
+ctx.lineTo(300, 400)
+ctx.strokeStyle = "white"
+ctx.stroke()
+ctx.fillStyle = "#FFFFFF"
+ctx.fillRect(0, 175, 8, 50)
+ctx.fillRect(592, 175, 8, 50)
+ctx.beginPath()
+ctx.arc(300, 200, 10, 0, Math.PI * 2)
+ctx.fillStyle = "white"
+ctx.fill()
+
 // declare variable for the score
 let leftScore = 0
 let rightScore = 0
@@ -13,20 +28,14 @@ function scoreText() {
     ctx.fillText(leftScore, 150, 30)
     ctx.fillText(rightScore, 450, 30)
 }
-// declare a variable for the net
-const netWidth = 4
-const netHeight = canvas.height
-const net = {
-    x: canvas.width / 2 - netWidth / 2,
-    y: 0,
-    width: netWidth,
-    height: netHeight,
-    color: "#FFF"
-}
-// declare a function for the net
+
 function drawNet() {
-    ctx.fillStyle = net.color
-    ctx.fillRect(net.x, net.y, net.width, net.height)
+    ctx.beginPath();
+    ctx.setLineDash([5, 10]);
+    ctx.moveTo(300, 0);
+    ctx.lineTo(300, 400);
+    ctx.strokeStyle = "white";
+    ctx.stroke();
 }
 // constructor function for paddle
 function Paddle(x, y, color, width, height) {
@@ -107,14 +116,16 @@ const ball = {
 function leftPaddleHit() {
     if (ball.x - ball.r < leftPaddle.x + leftPaddle.width &&
         ball.y - ball.r > leftPaddle.y &&
-        ball.y + ball.x < leftPaddle.y + leftPaddle.height
-    ) { moveRight()
+        // ball.x - ball.r < leftPaddle.x &&
+        ball.y + ball.r < leftPaddle.y + leftPaddle.height
+    ) {
+        moveRight()
         console.log("hit left paddle")
     }
 }
 // declare a function that will increase ball speed when it hits paddle
 function moveRight() {
-    ball.dx *= 1
+    ball.dx *= -1
     ball.dy *= -1
 }
 // declare a function that will detect collision on the right paddle
@@ -123,7 +134,8 @@ function rightPaddleHit() {
         ball.y + ball.r > rightPaddle.y &&
         rightPaddle.x + rightPaddle.width > ball.x &&
         rightPaddle.y + rightPaddle.height > ball.y
-    ) { moveLeft()
+    ) {
+        moveLeft()
         console.log("hit right paddle")
     }
 }
@@ -137,13 +149,9 @@ function hitWall() {
     if (ball.x + ball.r > canvas.width) {
         console.log("hit right wall")
         leftScore++
-    // hits the left wall, rightScore goes up
-    // } else if (ball.y - ball.r < 0 && ball.x + ball.r) {
-    //     console.log("hit left wall")
-    //     rightScore++
-    // }
     } else if (ball.x - ball.r < 0) {
         rightScore++
+        console.log("hit left wall")
     }
     // set left and right boundaries
     if (ball.x + ball.r > canvas.width || ball.x - ball.r < 0) {
@@ -162,22 +170,22 @@ let gameOver = false
 function gamePlay() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-if (!gameOver) {
-    updateBall() 
-} else return
-    drawBall()
-    drawNet()
-    scoreText()
-    leftPaddleHit()
-    rightPaddleHit()
-    hitWall()
-    leftPaddle.render()
-    rightPaddle.render()
+    if (!gameOver) {
+        updateBall()
+    } else return
+        drawBall()
+        drawNet()
+        scoreText()
+        leftPaddleHit()
+        rightPaddleHit()
+        hitWall()
+        leftPaddle.render()
+        rightPaddle.render()
     if (leftScore === 100 || rightScore === 100) {
         gameOver = true
     }
 }
-function updateBall () {
+function updateBall() {
     // bottom right corner is the starting direction of ball 
     ball.x += ball.dx
     ball.y += ball.dy
@@ -187,10 +195,7 @@ function gameLoop() {
 }
 function gameStart() {
     let framePerSecond = 50
-    setInterval(gameLoop, 1000/framePerSecond)
-}
-function hidePlayBtn () {
-    document.getElementById("playBtn").style.display = "none"
+    setInterval(gameLoop, 1000 / framePerSecond)
 }
 function reload() {
     reload = location.reload();
