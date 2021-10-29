@@ -13,7 +13,7 @@ ctx.fillStyle = "#FFFFFF"
 ctx.fillRect(0, 175, 8, 50)
 ctx.fillRect(592, 175, 8, 50)
 ctx.beginPath()
-ctx.arc(300, 200, 10, 0, Math.PI * 2)
+ctx.arc(300, 200, 12, 0, Math.PI * 2)
 ctx.fillStyle = "white"
 ctx.fill()
 
@@ -106,7 +106,7 @@ function drawBall() {
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
-    r: 10,
+    r: 12,
     // increment relating to movement in the x axis
     dx: 3,
     // increment relating to movement in the y axis
@@ -150,8 +150,8 @@ function hitWall() {
         console.log("hit right wall")
         leftScore++
     } else if (ball.x - ball.r < 0) {
-        rightScore++
         console.log("hit left wall")
+        rightScore++
     }
     // set left and right boundaries
     if (ball.x + ball.r > canvas.width || ball.x - ball.r < 0) {
@@ -171,7 +171,7 @@ function gamePlay() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     if (!gameOver) {
-        updateBall()
+        resetBall()
     } else return
         drawBall()
         drawNet()
@@ -185,7 +185,7 @@ function gamePlay() {
         gameOver = true
     }
 }
-function updateBall() {
+function resetBall() {
     // bottom right corner is the starting direction of ball 
     ball.x += ball.dx
     ball.y += ball.dy
@@ -194,8 +194,7 @@ function gameLoop() {
     gamePlay()
 }
 function gameStart() {
-    let framePerSecond = 50
-    setInterval(gameLoop, 1000 / framePerSecond)
+    setInterval(gameLoop, 1000 / 50)
 }
 function reload() {
     reload = location.reload();

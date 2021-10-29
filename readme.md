@@ -19,9 +19,8 @@
 * Enable two players
 * Left paddle will use keys "w" to go up "s" to go down
 * Right paddle will use arrow up and arrow down
-* Ball speed increases
+* Display a scoreboard
 
 ## Stretch Goals
-* Display a scoreboard
 * Implement an AI 
 
