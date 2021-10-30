@@ -108,9 +108,9 @@ const ball = {
     y: canvas.height / 2,
     r: 12,
     // increment relating to movement in the x axis
-    dx: 3,
+    dx: 4,
     // increment relating to movement in the y axis
-    dy: 3,
+    dy: 4,
 }
 // declare a function that will detect collision on the left paddle
 function leftPaddleHit() {
@@ -119,14 +119,17 @@ function leftPaddleHit() {
         // ball.x - ball.r < leftPaddle.x &&
         ball.y + ball.r < leftPaddle.y + leftPaddle.height
     ) {
-        moveRight()
+        bounceBallHorizontally()
+        bounceBallVertically()
         console.log("hit left paddle")
     }
 }
-// declare a function that will increase ball speed when it hits paddle
-function moveRight() {
+// declare two functions that will increase ball speed when it hits paddle
+function bounceBallHorizontally() {
     ball.dx *= -1
-    ball.dy *= -1
+}
+function bounceBallVertically() {
+     ball.dy *= -1
 }
 // declare a function that will detect collision on the right paddle
 function rightPaddleHit() {
@@ -135,20 +138,18 @@ function rightPaddleHit() {
         rightPaddle.x + rightPaddle.width > ball.x &&
         rightPaddle.y + rightPaddle.height > ball.y
     ) {
-        moveLeft()
+        bounceBallHorizontally()
+        bounceBallVertically()
         console.log("hit right paddle")
     }
 }
-// declare a function that will increase ball speed when it hits paddle
-function moveLeft() {
-    ball.dx *= -1
-    ball.dy *= -1
-}
+
 function hitWall() {
     // hits the right wall, leftScore goes up
     if (ball.x + ball.r > canvas.width) {
         console.log("hit right wall")
         leftScore++
+    // hits left wall, rightScore goes up
     } else if (ball.x - ball.r < 0) {
         console.log("hit left wall")
         rightScore++
@@ -181,7 +182,7 @@ function gamePlay() {
         hitWall()
         leftPaddle.render()
         rightPaddle.render()
-    if (leftScore === 100 || rightScore === 100) {
+    if (leftScore === 10 || rightScore === 10) {
         gameOver = true
     }
 }
@@ -196,10 +197,8 @@ function gameLoop() {
 function gameStart() {
     setInterval(gameLoop, 1000 / 50)
 }
-function reload() {
-    reload = location.reload();
-}
 // add event listeners for paddles
 document.addEventListener("keydown", moveLeftPaddle)
 document.addEventListener("keydown", moveRightPaddle)
 document.getElementById("startBtn").addEventListener("click", gameStart)
+document.getElementById("restartBtn").addEventListener("click", gamePlay)

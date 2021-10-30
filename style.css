@@ -10,8 +10,6 @@ h1 {
     text-align: center;
     font-family: "Lexend Exa";
     font-size: xx-large;
-    margin-left: .5em;
-    
 }
 canvas {
     background-color: rgb(4, 126, 39);
@@ -24,7 +22,7 @@ canvas {
 #buttons {
     text-align: center;
 }
-#startBtn, #playAgain {
+#startBtn, #restartBtn {
     margin-top: 1em;
     margin-left: 120px;
     margin-right: 110px;
