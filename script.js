@@ -197,8 +197,18 @@ function gameLoop() {
 function gameStart() {
     setInterval(gameLoop, 1000 / 50)
 }
+function gameRestart() {
+    leftScore = 0
+    rightScore = 0
+    ball.x = 300
+    ball.y = 200
+    leftPaddle.x = 0
+    leftPaddle.y = 175
+    rightPaddle.x = 592
+    rightPaddle.y = 175
+}
 // add event listeners for paddles
 document.addEventListener("keydown", moveLeftPaddle)
 document.addEventListener("keydown", moveRightPaddle)
 document.getElementById("startBtn").addEventListener("click", gameStart)
-document.getElementById("restartBtn").addEventListener("click", gamePlay)
+document.getElementById("restartBtn").addEventListener("click", gameRestart)

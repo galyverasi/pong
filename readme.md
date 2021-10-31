@@ -1,4 +1,4 @@
-# A Simple Game of Ping Pong
+# A Simple Game of Pong
 
 ## Wireframe
 ![pong](pong.png)
@@ -10,7 +10,7 @@
 
 ## MVP Goals
 * Create the game using canvas
-* Display a ping pong board in the browser
+* Display a table tennis board in the browser
 * Display two rectangles as the paddle
 * Display a ball that moves 45°
 * Implement collision detection and have the ball bounce if it hits the paddle
@@ -24,3 +24,4 @@
 ## Stretch Goals
 * Implement an AI 
 
+Click [here](https://galyverasi.github.io/project1/) to play.
